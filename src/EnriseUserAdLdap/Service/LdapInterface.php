@@ -14,6 +14,7 @@ use Zend\Log\Writer\Stream as LogWriter;
 use Zend\Authentication\AuthenticationService;
 use Zend\Authentication\Adapter\Ldap as AuthAdapter;
 use Zend\Ldap\Exception\LdapException;
+use adLDAP\adLDAP;
 
 class LdapInterface {
 
@@ -48,9 +49,8 @@ class LdapInterface {
      * Bind $this->adldap to a valid LDAP handle
      */
     public function bind() {
-        include (dirname(__FILE__) . "/../../../vendor/adLDAP/src/adLDAP.php");
         try {
-            $this->adldap = new \adLDAP($this->config);
+            $this->adldap = new adLDAP($this->config);
         }
         catch (\adLDAPException $e) {
             echo $e; 
