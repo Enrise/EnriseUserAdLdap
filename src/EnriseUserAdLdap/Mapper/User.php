@@ -1,26 +1,26 @@
 <?php
 /**
- * This file is part of the ZfcUserAdLdap Module (https://github.com/RobQuistNL/ZfcUserAdLdap)
+ * This file is part of the EnriseUserAdLdap Module (https://github.com/RobQuistNL/EnriseUserAdLdap)
  *
  * Copyright (c) 2013 Rob Quist (https://github.com/RobQuistNL)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.txt that was distributed with this source code.
  */
-namespace ZfcUserAdLdap\Mapper;
+namespace EnriseUserAdLdap\Mapper;
 
 
 use ZfcUser\Mapper\User as ZfcUserMapper;
-use ZfcUserAdLdap\Options\ModuleOptions;
-use ZfcUserAdLdap\Service\LdapInterface;
+use EnriseUserAdLdap\Options\ModuleOptions;
+use EnriseUserAdLdap\Service\LdapInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class User extends ZfcUserMapper
 {
-    /** @var \ZfcUserAdLdap\Service\LdapInterface */
+    /** @var \EnriseUserAdLdap\Service\LdapInterface */
     protected $ldap;
     /**
-     * @var \ZfcUserAdLdap\Options\ModuleOptions
+     * @var \EnriseUserAdLdap\Options\ModuleOptions
      */
     protected $options;
 
@@ -64,7 +64,7 @@ class User extends ZfcUserMapper
     /**
      * getEntity
      * 
-     * @return ZfcUserAdLdap\Entity\User
+     * @return EnriseUserAdLdap\Entity\User
      */
     public function getEntity()
     {
@@ -76,7 +76,7 @@ class User extends ZfcUserMapper
      * 
      * @param string $identity
      * @param string $credential
-     * @return \ZfcUserAdLdap\Mapper\User|boolean
+     * @return \EnriseUserAdLdap\Mapper\User|boolean
      */
     public function authenticate($identity,$credential){
         $auth = $this->ldap->authenticate($identity, $credential);

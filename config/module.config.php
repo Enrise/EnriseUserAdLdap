@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the ZfcUserAdLdap Module (https://github.com/RobQuistNL/ZfcUserAdLdap)
+ * This file is part of the EnriseUserAdLdap Module (https://github.com/RobQuistNL/EnriseUserAdLdap)
  *
  * Copyright (c) 2013 Rob Quist (https://github.com/RobQuistNL)
  *

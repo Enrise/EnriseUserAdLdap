@@ -1,4 +1,4 @@
-ZfcUserLdap
+EnriseUserAdLdap
 ================
 
 Zend Framework ZfcUser Extension to provide LDAP Authentication using the 
@@ -15,8 +15,8 @@ Structure based on ZfcUserLdap by Nitecon (https://github.com/Nitecon/zfcuser-ld
 The following steps are necessary to get this module working
   
   1. Make sure ZfcUser is working correctly
-  2. Clone https://github.com/RobQuistNL/ZfcUserAdLdap into the vendor dir (as ZfcUserAdLdap)
-  3. Add `ZfcUserAdLdap` in the modules array in application.config.php 
+  2. Clone https://github.com/RobQuistNL/EnriseUserAdLdap into the vendor dir (as EnriseUserAdLdap)
+  3. Add `EnriseUserAdLdap` in the modules array in application.config.php 
   4. Add Zend Framework LDAP configuration to your autoload
 
      An example of the configuration is shown below for configs/autoload/global.php
@@ -38,7 +38,7 @@ The following steps are necessary to get this module working
   5. Edit the line in vendor/ZfcUser/src/Zfcuser/Authentication/Adapter/AdapterChainServiceFactory.php
       $adapter = $serviceLocator->get('ZfcUser\Authentication\Adapter\Db');
       To:
-      $adapter = $serviceLocator->get('ZfcUserAdLdap\Authentication\Adapter\Ldap');
+      $adapter = $serviceLocator->get('EnriseUserAdLdap\Authentication\Adapter\Ldap');
       
       
 ## Additional Information
@@ -53,8 +53,8 @@ shown below
 <pre class="brush:php">
   array(
     'ZfcUser',
-    'ZfcUserAdLdap',
-    /* It's important to load ZfcUser before ZfcUserAdLdap as ZfcUserAdLdap is an addon to ZfcUser */
+    'EnriseUserAdLdap',
+    /* It's important to load ZfcUser before EnriseUserAdLdap as EnriseUserAdLdap is an addon to ZfcUser */
   );
 </pre>
 
@@ -66,7 +66,7 @@ zfcuser configuration:
     array(
         'enable_registration' => false,
         'enable_username' => true,
-        'auth_adapters' => array( 100 => 'ZfcUserAdLdap\Authentication\Adapter\Ldap' ),
+        'auth_adapters' => array( 100 => 'EnriseUserAdLdap\Authentication\Adapter\Ldap' ),
         'auth_identity_fields' => array( 'username' ),
     ),
 </pre>

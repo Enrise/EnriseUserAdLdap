@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the ZfcUserAdLdap Module (https://github.com/RobQuistNL/ZfcUserAdLdap)
+ * This file is part of the EnriseUserAdLdap Module (https://github.com/RobQuistNL/EnriseUserAdLdap)
  *
  * Copyright (c) 2013 Rob Quist (https://github.com/RobQuistNL)
  *
@@ -8,9 +8,9 @@
  * the file LICENSE.txt that was distributed with this source code.
  */
 
-namespace ZfcUserAdLdap\ServiceFactory;
+namespace EnriseUserAdLdap\ServiceFactory;
 
-use ZfcUserAdLdap\Service\LdapInterface;
+use EnriseUserAdLdap\Service\LdapInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

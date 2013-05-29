@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of the ZfcUserAdLdap Module (https://github.com/RobQuistNL/ZfcUserAdLdap)
+ * This file is part of the EnriseUserAdLdap Module (https://github.com/RobQuistNL/EnriseUserAdLdap)
  *
  * Copyright (c) 2013 Rob Quist (https://github.com/RobQuistNL)
  *
  * For the full copyright and license information, please view
  * the file LICENSE.txt that was distributed with this source code.
  */
-namespace ZfcUserAdLdap\Authentication\Adapter;
+namespace EnriseUserAdLdap\Authentication\Adapter;
 
 use Zend\Authentication\Storage;
 use Zend\Authentication\Result as AuthenticationResult;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
-use ZfcUserAdLdap\Mapper\User as UserMapperInterface;
+use EnriseUserAdLdap\Mapper\User as UserMapperInterface;
 use ZfcUser\Options\AuthenticationOptionsInterface;
 use ZfcUser\Authentication\Adapter\ChainableAdapter as AdapterChain;
 use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
@@ -55,7 +55,7 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      */
     public function authenticate(AuthEvent $e) {
 
-        $mapper = new \ZfcUserAdLdap\Mapper\User(
+        $mapper = new \EnriseUserAdLdap\Mapper\User(
                 $this->getServiceManager()->get('ldap_interface'), $this->getServiceManager()->get('zfcuser_module_options')
         );
 

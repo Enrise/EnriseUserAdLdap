@@ -1,10 +1,10 @@
 <?php
 return array(
-    'ZfcUserAdLdap\Module'                            => __DIR__ . '/Module.php',
-    'ZfcUserAdLdap\Authentication\Adapter\Ldap'       => __DIR__ . '/src/ZfcUserAdLdap/Authentication/Adapter/Ldap.php',
-    //'ZfcUserAdLdap\Entity\User'                       => __DIR__ . '/src/ZfcUserAdLdap/Entity/User.php',
-    //'ZfcUserAdLdap\Mapper\User'                       => __DIR__ . '/src/ZfcUserAdLdap/Mapper/User.php',
-    //'ZfcUserAdLdap\Options\ModuleOptions'             => __DIR__ . '/src/ZfcUserAdLdap/Options/ModuleOptions.php',
-    //'ZfcUserAdLdap\Service\LdapInterface'             => __DIR__ . '/src/ZfcUserAdLdap/Service/LdapInterface.php',
-    //'ZfcUserAdLdap\ServiceFactory\LdapServiceFactory' => __DIR__ . '/src/ZfcUserAdLdap/ServiceFactory/LdapServiceFactory.php',
+    'EnriseUserAdLdap\Module'                            => __DIR__ . '/Module.php',
+    'EnriseUserAdLdap\Authentication\Adapter\Ldap'       => __DIR__ . '/src/EnriseUserAdLdap/Authentication/Adapter/Ldap.php',
+    'EnriseUserAdLdap\Entity\User'                       => __DIR__ . '/src/EnriseUserAdLdap/Entity/User.php',
+    'EnriseUserAdLdap\Mapper\User'                       => __DIR__ . '/src/EnriseUserAdLdap/Mapper/User.php',
+    'EnriseUserAdLdap\Options\ModuleOptions'             => __DIR__ . '/src/EnriseUserAdLdap/Options/ModuleOptions.php',
+    'EnriseUserAdLdap\Service\LdapInterface'             => __DIR__ . '/src/EnriseUserAdLdap/Service/LdapInterface.php',
+    'EnriseUserAdLdap\ServiceFactory\LdapServiceFactory' => __DIR__ . '/src/EnriseUserAdLdap/ServiceFactory/LdapServiceFactory.php',
 );
