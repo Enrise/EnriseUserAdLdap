@@ -1,6 +1,4 @@
 <?php
-include (dirname(__FILE__) . "/vendor/adLDAP/lib/adLDAP/adLDAP.php");
-
 return array(
     'EnriseUserAdLdap\Module'                            => __DIR__ . '/Module.php',
     'EnriseUserAdLdap\Authentication\Adapter\Ldap'       => __DIR__ . '/src/EnriseUserAdLdap/Authentication/Adapter/Ldap.php',

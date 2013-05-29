@@ -13,6 +13,7 @@ namespace EnriseUserAdLdap;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+require_once (dirname(__FILE__) . "/vendor/adLDAP/lib/adLDAP/adLDAP.php");
 
 class Module {
 
