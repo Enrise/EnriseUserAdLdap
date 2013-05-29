@@ -1,0 +1,3 @@
+[submodule "vendor/adLDAP"]
+	path = vendor/adLDAP
+	url = git@github.com:Enrise/adLDAP.git
