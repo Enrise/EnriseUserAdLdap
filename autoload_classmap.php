@@ -1,4 +1,7 @@
 <?php
+/**
+ * Autoloader for classmaps.
+ */
 return array(
     'EnriseUserAdLdap\Module'                            => __DIR__ . '/Module.php',
     'EnriseUserAdLdap\Authentication\Adapter\Ldap'       => __DIR__ . '/src/EnriseUserAdLdap/Authentication/Adapter/Ldap.php',

@@ -17,8 +17,11 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 
 class User extends ZfcUserMapper
 {
-    /** @var \EnriseUserAdLdap\Service\LdapInterface */
+    /** 
+     * @var \EnriseUserAdLdap\Service\LdapInterface 
+     */
     protected $ldap;
+    
     /**
      * @var \EnriseUserAdLdap\Options\ModuleOptions
      */
@@ -78,9 +81,10 @@ class User extends ZfcUserMapper
      * @param string $credential
      * @return \EnriseUserAdLdap\Mapper\User|boolean
      */
-    public function authenticate($identity,$credential){
+    public function authenticate($identity, $credential)
+    {
         $auth = $this->ldap->authenticate($identity, $credential);
-        if ($auth !== FALSE) { //If the login iformation is correct
+        if ($auth !== false) {
             $this->entity->setDisplayName($auth[0]['displayname'][0]);
             
             //@TODO Make the mail domain configurable
@@ -105,7 +109,7 @@ class User extends ZfcUserMapper
      */
     public function insert($entity, $tableName = null, HydratorInterface $hydrator = null)
     {
-        return FALSE;
+        return false;
     }
 
     /**
@@ -113,6 +117,6 @@ class User extends ZfcUserMapper
      */
     public function update($entity, $where = null, $tableName = null, HydratorInterface $hydrator = null)
     {
-        return FALSE;
+        return false;
     }
 }

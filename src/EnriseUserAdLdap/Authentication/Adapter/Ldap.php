@@ -46,6 +46,40 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
     protected $storage;
     
     /**
+     * Initiate our own UserMapper
+     * @return \EnriseUserAdLdap\Mapper\User
+     */
+    private function createMapper() 
+    {
+        
+        $mapper = new \EnriseUserAdLdap\Mapper\User(
+                $this->getServiceManager()->get('ldap_interface'), $this->getServiceManager()->get('zfcuser_module_options')
+        );
+        
+        $this->setMapper($mapper);
+        
+        return $this->getMapper();
+    }
+    
+    /**
+     * Create a ZfcUser user entity with values from an EnriseUserAdLdap entity
+     * @param EnriseUserAdLdap\Entity\User $userEntity
+     * @return \ZfcUser\Entity\User
+     */
+    private function populateUserDbObject(EnriseUserAdLdap\Entity\User $userEntity) 
+    {
+        
+        $userDbObject = new \ZfcUser\Entity\User();
+        
+        $userDbObject->setUsername($userEntity->getUsername());
+        $userDbObject->setEmail($userEntity->getEmail());
+        $userDbObject->setDisplayName($userEntity->getDisplayName());
+        $userDbObject->setPassword(''); //Otherwise the query won't work.
+        
+        return $userDbObject;
+    }
+    
+    /**
      * authenticate Function.
      * Fired by ChainableAdapter.
      * 
@@ -53,22 +87,17 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      * 
      * @see \ZfcUser\Authentication\Adapter\ChainableAdapter::authenticate()
      */
-    public function authenticate(AuthEvent $e) {
+    public function authenticate(AuthEvent $e) 
+    {
 
-        $mapper = new \EnriseUserAdLdap\Mapper\User(
-                $this->getServiceManager()->get('ldap_interface'), $this->getServiceManager()->get('zfcuser_module_options')
-        );
-
-        $this->setMapper($mapper);
+        $this->createMapper();
 
         $identity = $e->getRequest()->getPost()->get('identity');
         $credential = $e->getRequest()->getPost()->get('credential');
         
-        $userObject = NULL;
-        
         $userObject = $this->getMapper()->authenticate($identity, $credential);
         
-        if ($userObject === FALSE) {
+        if ($userObject === false) {
             // Password does not match
             $e->setCode(AuthenticationResult::FAILURE_CREDENTIAL_INVALID)
                     ->setMessages(array($userObject));
@@ -83,23 +112,17 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
         
         if ($userDbMapper->findByUsername($userEntity->getUsername()) === false) {
             //This user has been logged in, but he's not yet in the database.
-            //Lets create the original user Entity
-            $userDbObject = new \ZfcUser\Entity\User();
-            
-            $userDbObject->setUsername($userEntity->getUsername());
-            $userDbObject->setEmail($userEntity->getEmail());
-            $userDbObject->setDisplayName($userEntity->getDisplayName());
-            $userDbObject->setPassword(''); //Otherwise the query won't work.
-            
-            //And add him
+            $userDbObject = $this->populateUserDbObject($userEntity);
             $userDbMapper->insert($userDbObject, 'user');
         } 
         
-        $this->setSatisfied(true);
-        $storage = $this->getStorage()->read();
+        $this                ->setSatisfied(true);
+        $storage             = $this->getStorage()->read();
         $storage['identity'] = $e->getIdentity();
-        $this->getStorage()->write($storage);
-        $e->setCode(AuthenticationResult::SUCCESS)->setMessages(array('Authentication successful.'));
+        $this->getStorage()  ->write($storage);
+        
+        $e->setCode(AuthenticationResult::SUCCESS)
+          ->setMessages(array('Authentication successful.'));
     }
 
     /**
@@ -109,7 +132,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      *
      * @return Storage\StorageInterface
      */
-    public function getStorage() {
+    public function getStorage() 
+    {
             
         if (null === $this->storage) {
             $this->setStorage(new Storage\Session(get_called_class()));
@@ -124,7 +148,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      * @param  Storage\StorageInterface $storage
      * @return AbstractAdapter Provides a fluent interface
      */
-    public function setStorage(Storage\StorageInterface $storage) {
+    public function setStorage(Storage\StorageInterface $storage) 
+    {
         $this->storage = $storage;
         return $this;
     }
@@ -134,7 +159,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      *
      * @return bool
      */
-    public function isSatisfied() {
+    public function isSatisfied() 
+    {
         
         $storage = $this->getStorage()->read();
         return (isset($storage['is_satisfied']) && true === $storage['is_satisfied']);
@@ -146,14 +172,16 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      * @param bool $bool
      * @return AbstractAdapter
      */
-    public function setSatisfied($bool = true) {
+    public function setSatisfied($bool = true) 
+    {
         $storage = $this->getStorage()->read() ? : array();
         $storage['is_satisfied'] = $bool;
         $this->getStorage()->write($storage);
         return $this;
     }
 
-    public function preprocessCredential($credential) {
+    public function preprocessCredential($credential) 
+    {
         $processor = $this->getCredentialPreprocessor();
         if (is_callable($processor)) {
             return $processor($credential);
@@ -166,7 +194,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      *
      * @return UserMapperInterface
      */
-    public function getMapper() {
+    public function getMapper() 
+    {
         if (null === $this->mapper) {
             $this->mapper = $this->getServiceManager()->get('zfcuser_user_mapper');
         }
@@ -179,7 +208,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      * @param UserMapperInterface $mapper
      * @return Db
      */
-    public function setMapper(UserMapperInterface $mapper) {
+    public function setMapper(UserMapperInterface $mapper) 
+    {
         $this->mapper = $mapper;
         return $this;
     }
@@ -189,7 +219,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      *
      * @return \callable
      */
-    public function getCredentialPreprocessor() {
+    public function getCredentialPreprocessor() 
+    {
         return $this->credentialPreprocessor;
     }
 
@@ -198,7 +229,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      *
      * @param $credentialPreprocessor the value to be set
      */
-    public function setCredentialPreprocessor($credentialPreprocessor) {
+    public function setCredentialPreprocessor($credentialPreprocessor) 
+    {
         $this->credentialPreprocessor = $credentialPreprocessor;
         return $this;
     }
@@ -208,7 +240,8 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      *
      * @return ServiceManager
      */
-    public function getServiceManager() {
+    public function getServiceManager() 
+    {
         return $this->serviceManager;
     }
 
@@ -218,21 +251,24 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      * @param ServiceManager $locator
      * @return void
      */
-    public function setServiceManager(ServiceManager $serviceManager) {
+    public function setServiceManager(ServiceManager $serviceManager) 
+    {
         $this->serviceManager = $serviceManager;
     }
 
     /**
      * @param AuthenticationOptionsInterface $options
      */
-    public function setOptions(AuthenticationOptionsInterface $options) {
+    public function setOptions(AuthenticationOptionsInterface $options) 
+    {
         $this->options = $options;
     }
 
     /**
      * @return AuthenticationOptionsInterface
      */
-    public function getOptions() {
+    public function getOptions() 
+    {
         if (!$this->options instanceof AuthenticationOptionsInterface) {
             $this->setOptions($this->getServiceManager()->get('zfcuser_module_options'));
         }

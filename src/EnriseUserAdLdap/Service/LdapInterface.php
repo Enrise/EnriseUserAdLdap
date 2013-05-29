@@ -18,13 +18,19 @@ use adLDAP\adLDAP;
 
 class LdapInterface {
 
+    /**
+     * @var array config
+     */
     private $config;
+    
+    /**
+     * adLDAP handle
+     * @var adldap adLDAP\adLDAP()
+     */
     protected $adldap;
-    protected $entity;
-    protected $active_server;
-    protected $error;
 
-    public function __construct($config) {
+    public function __construct($config) 
+    {
 	    $this->config = $config;
         try {
             $this->bind();
@@ -35,20 +41,10 @@ class LdapInterface {
     }
 
     /**
-     *
-     * @param type $msg
-     * @param type $log_level EMERG=0, ALERT=1, CRIT=2, ERR=3, WARN=4, NOTICE=5, INFO=6, DEBUG=7
-     */
-    public function log($msg, $priority = 5) {
-        echo '<br/>Logger called';
-        return 1;
-    }
-
-    /**
-     * bind
      * Bind $this->adldap to a valid LDAP handle
      */
-    public function bind() {
+    public function bind() 
+    {
         try {
             $this->adldap = new adLDAP($this->config);
         }
@@ -64,7 +60,8 @@ class LdapInterface {
      * @param string $password
      * @return User information if success, false if not. array|boolean
      */
-    function authenticate($username, $password) {
+    function authenticate($username, $password) 
+    {
         $auth = $this->adldap->authenticate($username, $password);
         
         if ($auth){

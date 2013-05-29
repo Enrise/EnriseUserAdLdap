@@ -26,7 +26,8 @@ class ModuleOptions extends BaseModuleOptions {
     /**
      * @param boolean $enableDefaultEntities
      */
-    public function setEnableDefaultEntities($enableDefaultEntities) {
+    public function setEnableDefaultEntities($enableDefaultEntities) 
+    {
         $this->enableDefaultEntities = $enableDefaultEntities;
         return $this;
     }
@@ -34,7 +35,8 @@ class ModuleOptions extends BaseModuleOptions {
     /**
      * @return boolean
      */
-    public function getEnableDefaultEntities() {
+    public function getEnableDefaultEntities() 
+    {
         return $this->enableDefaultEntities;
     }
 

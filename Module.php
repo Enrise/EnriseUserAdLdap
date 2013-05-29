@@ -17,13 +17,23 @@ require_once (dirname(__FILE__) . "/vendor/adLDAP/lib/adLDAP/adLDAP.php");
 
 class Module {
 
-    public function onBootstrap(MvcEvent $e) {
+    /**
+     * Bootstrapper for module
+     * @param MvcEvent $e
+     */
+    public function onBootstrap(MvcEvent $e) 
+    {
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
 
-    public function getAutoloaderConfig() {
+    /**
+     * Get the autoloader configuration
+     * @return array $autoloaderconfig
+     */
+    public function getAutoloaderConfig() 
+    {
         return array(
             'Zend\Loader\ClassMapAutoloader' => array(
                 __DIR__ . '/autoload_classmap.php',
@@ -36,7 +46,12 @@ class Module {
         );
     }
 
-    public function getServiceConfig() {
+    /**
+     * get Service config
+     * @return $serviceConfig array|null|\EnriseUserAdLdap\Options\ModuleOptions|\EnriseUserAdLdap\Mapper\User|\ZfcUser\Mapper\User
+     */
+    public function getServiceConfig() 
+    {
         return array(
             'invokables' => array(
                 'EnriseUserAdLdap\Authentication\Adapter\Ldap' => 'EnriseUserAdLdap\Authentication\Adapter\Ldap',
@@ -66,7 +81,11 @@ class Module {
         );
     }
 
-    public function getConfig() {
+    /**
+     * Include the module config
+     */
+    public function getConfig() 
+    {
         return include __DIR__ . '/config/module.config.php';
     }
 
