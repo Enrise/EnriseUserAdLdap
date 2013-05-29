@@ -28,10 +28,11 @@ The following steps are necessary to get this module working
         'domain_controllers' => array (
             'dc01.example.com',
         ),
-        'account_suffix'     => '@example.com',
-        'admin_password'     => '', //Not neccesary, perhaps for future functions
-        'admin_username'     => '', //Not neccesary
-        'base_dn'            => 'DC=example,DC=com',
+        'account_suffix'       => '@example.com',
+        'admin_password'       => '', //Not neccesary, perhaps for future functions
+        'admin_username'       => '', //Not neccesary
+        'base_dn'              => 'DC=example,DC=com',
+        'default_email_domain' => 'example.com', //Will be appended after username (inc. @-sign) as e-mail for database
     ),
       </pre>
 

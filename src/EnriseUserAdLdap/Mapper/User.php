@@ -14,9 +14,12 @@ use ZfcUser\Mapper\User as ZfcUserMapper;
 use EnriseUserAdLdap\Options\ModuleOptions;
 use EnriseUserAdLdap\Service\LdapInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use EnriseUserAdLdap\GlobalConfigAwareInterface;
 
-class User extends ZfcUserMapper
+class User extends ZfcUserMapper 
 {
+
+    
     /** 
      * @var \EnriseUserAdLdap\Service\LdapInterface 
      */
@@ -26,20 +29,29 @@ class User extends ZfcUserMapper
      * @var \EnriseUserAdLdap\Options\ModuleOptions
      */
     protected $options;
+    
 
+    /**
+     * @var array
+     */
+    protected $config;
+    
     /**
      * Constructor
      * @param LdapInterface $ldap
      * @param ModuleOptions $options
+     * @param array $config
      */
-    public function __construct(LdapInterface $ldap, ModuleOptions $options)
+    public function __construct(LdapInterface $ldap, ModuleOptions $options, $config)
     {
         $this->ldap      = $ldap;
         $this->options = $options;
+        $this->config = $config;
+        
         $entityClass = $this->options->getUserEntityClass();
         $this->entity = new $entityClass();
     }
-
+    
     /**
      * @see \ZfcUser\Mapper\User::findByUsername()
      */
@@ -86,18 +98,10 @@ class User extends ZfcUserMapper
         $auth = $this->ldap->authenticate($identity, $credential);
         if ($auth !== false) {
             $this->entity->setDisplayName($auth[0]['displayname'][0]);
-            
-            //@TODO Make the mail domain configurable
-            if (isset($auth[0]['mail'][0])) {
-                $mail_exp = explode('.', $auth[0]['mail'][0]);
-            } else {
-                $mail_exp[0] = 'enrise';
-                $mail_exp[1] = 'com';
-            }
-            $this->entity->setEmail($auth[0]['samaccountname'][0] . '@' . $mail_exp[count($mail_exp)-2] . '.' . $mail_exp[count($mail_exp)-1]);
-            
+            $this->entity->setEmail($auth[0]['samaccountname'][0] . '@' . $this->config['default_email_domain']);
             $this->entity->setId($auth[0]['objectsid'][0]);
             $this->entity->setUsername($auth[0]['samaccountname'][0]);
+            $this->entity->setPassword('');
             return $this; 
        } else {
            return false;

@@ -64,8 +64,9 @@ class Module {
                     return new Options\ModuleOptions(isset($config['zfcuser']) ? $config['zfcuser'] : array());
                 },
                 'zfcuser_user_mapper' => function ($sm) {
+                    $config = $sm->get('Config');
                     return new \EnriseUserAdLdap\Mapper\User(
-                            $sm->get('ldap_interface'), $sm->get('zfcuser_module_options')
+                            $sm->get('ldap_interface'), $sm->get('zfcuser_module_options'), $config['ldap']
                     );
                 },
                 'zfcuser_user_db_mapper' => function ($sm) {

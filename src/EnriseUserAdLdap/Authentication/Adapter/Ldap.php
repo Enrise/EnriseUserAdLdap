@@ -51,9 +51,9 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      */
     private function createMapper() 
     {
-        
+        $config = $this->getServiceManager()->get('Config');
         $mapper = new \EnriseUserAdLdap\Mapper\User(
-                $this->getServiceManager()->get('ldap_interface'), $this->getServiceManager()->get('zfcuser_module_options')
+                $this->getServiceManager()->get('ldap_interface'), $this->getServiceManager()->get('zfcuser_module_options'), $config['ldap']
         );
         
         $this->setMapper($mapper);
