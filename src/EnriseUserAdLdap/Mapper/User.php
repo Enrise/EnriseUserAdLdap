@@ -14,7 +14,6 @@ use ZfcUser\Mapper\User as ZfcUserMapper;
 use EnriseUserAdLdap\Options\ModuleOptions;
 use EnriseUserAdLdap\Service\LdapInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
-use EnriseUserAdLdap\GlobalConfigAwareInterface;
 
 class User extends ZfcUserMapper 
 {
@@ -30,7 +29,6 @@ class User extends ZfcUserMapper
      */
     protected $options;
     
-
     /**
      * @var array
      */
@@ -51,7 +49,7 @@ class User extends ZfcUserMapper
         $entityClass = $this->options->getUserEntityClass();
         $this->entity = new $entityClass();
     }
-    
+
     /**
      * @see \ZfcUser\Mapper\User::findByUsername()
      */
