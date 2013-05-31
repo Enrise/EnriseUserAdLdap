@@ -49,8 +49,7 @@ class LdapInterface {
             $this->adldap = new adLDAP($this->config);
         }
         catch (\adLDAPException $e) {
-            echo $e; 
-            die;
+            return $e; 
         }
     }
 
