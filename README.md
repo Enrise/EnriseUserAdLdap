@@ -35,11 +35,6 @@ The following steps are necessary to get this module working
         'default_email_domain' => 'example.com', //Will be appended after username (inc. @-sign) as e-mail for database
     ),
       </pre>
-
-  5. Edit the line in vendor/ZfcUser/src/Zfcuser/Authentication/Adapter/AdapterChainServiceFactory.php
-      $adapter = $serviceLocator->get('ZfcUser\Authentication\Adapter\Db');
-      To:
-      $adapter = $serviceLocator->get('EnriseUserAdLdap\Authentication\Adapter\Ldap');
       
       
 ## Additional Information
