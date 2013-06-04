@@ -9,11 +9,12 @@
  */
 namespace EnriseUserAdLdap\Authentication\Adapter;
 
+use EnriseUserAdLdap\Mapper\User as UserMapperInterface;
+use EnriseUserAdLdap\Entity\User as UserEntity;
 use Zend\Authentication\Storage;
 use Zend\Authentication\Result as AuthenticationResult;
 use Zend\ServiceManager\ServiceManagerAwareInterface;
 use Zend\ServiceManager\ServiceManager;
-use EnriseUserAdLdap\Mapper\User as UserMapperInterface;
 use ZfcUser\Options\AuthenticationOptionsInterface;
 use ZfcUser\Authentication\Adapter\ChainableAdapter as AdapterChain;
 use ZfcUser\Authentication\Adapter\AdapterChainEvent as AuthEvent;
@@ -66,7 +67,7 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      * @param EnriseUserAdLdap\Entity\User $userEntity
      * @return \ZfcUser\Entity\User
      */
-    private function populateUserDbObject(EnriseUserAdLdap\Entity\User $userEntity) 
+    private function populateUserDbObject(UserEntity $userEntity) 
     {
         
         $userDbObject = new \ZfcUser\Entity\User();
