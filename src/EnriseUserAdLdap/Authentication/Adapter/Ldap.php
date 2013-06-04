@@ -66,7 +66,7 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
      * @param EnriseUserAdLdap\Entity\User $userEntity
      * @return \ZfcUser\Entity\User
      */
-    private function populateUserDbObject(EnriseUserAdLdap\Entity\User $userEntity) 
+    private function populateUserDbObject(\EnriseUserAdLdap\Entity\User $userEntity) 
     {
         
         $userDbObject = new \ZfcUser\Entity\User();
