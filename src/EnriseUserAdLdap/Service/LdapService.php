@@ -16,7 +16,7 @@ use Zend\Authentication\Adapter\Ldap as AuthAdapter;
 use Zend\Ldap\Exception\LdapException;
 use adLDAP\adLDAP;
 
-class LdapInterface {
+class LdapService {
 
     /**
      * @var array config
@@ -49,7 +49,7 @@ class LdapInterface {
             $this->adldap = new adLDAP($this->config);
         }
         catch (\adLDAPException $e) {
-            return $e; 
+            throw new \Exception($e->getMessage(), $e->getCode(), $e); 
         }
     }
 

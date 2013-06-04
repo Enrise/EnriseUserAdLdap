@@ -12,15 +12,16 @@ namespace EnriseUserAdLdap\Mapper;
 
 use ZfcUser\Mapper\User as ZfcUserMapper;
 use EnriseUserAdLdap\Options\ModuleOptions;
-use EnriseUserAdLdap\Service\LdapInterface;
+use EnriseUserAdLdap\Service\LdapService;
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use EnriseUserAdLdap\GlobalConfigAwareInterface;
 
 class User extends ZfcUserMapper 
 {
 
     
     /** 
-     * @var \EnriseUserAdLdap\Service\LdapInterface 
+     * @var \EnriseUserAdLdap\Service\LdapService 
      */
     protected $ldap;
     
@@ -29,6 +30,7 @@ class User extends ZfcUserMapper
      */
     protected $options;
     
+
     /**
      * @var array
      */
@@ -36,11 +38,11 @@ class User extends ZfcUserMapper
     
     /**
      * Constructor
-     * @param LdapInterface $ldap
+     * @param LdapService $ldap
      * @param ModuleOptions $options
      * @param array $config
      */
-    public function __construct(LdapInterface $ldap, ModuleOptions $options, $config)
+    public function __construct(LdapService $ldap, ModuleOptions $options, $config)
     {
         $this->ldap      = $ldap;
         $this->options = $options;
@@ -49,7 +51,7 @@ class User extends ZfcUserMapper
         $entityClass = $this->options->getUserEntityClass();
         $this->entity = new $entityClass();
     }
-
+    
     /**
      * @see \ZfcUser\Mapper\User::findByUsername()
      */
