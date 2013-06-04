@@ -32,12 +32,7 @@ class LdapService {
     public function __construct($config) 
     {
 	    $this->config = $config;
-        try {
-            $this->bind();
-        } catch (\Exception $exc) {
-            return $this->error;
-        }
-
+        $this->bind();
     }
 
     /**
@@ -45,12 +40,7 @@ class LdapService {
      */
     public function bind() 
     {
-        try {
-            $this->adldap = new adLDAP($this->config);
-        }
-        catch (\adLDAPException $e) {
-            throw new \Exception($e->getMessage(), $e->getCode(), $e); 
-        }
+        $this->adldap = new adLDAP($this->config);
     }
 
     /**
