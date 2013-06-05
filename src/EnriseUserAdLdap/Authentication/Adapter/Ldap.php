@@ -97,7 +97,6 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
         $credential = $e->getRequest()->getPost()->get('credential');
         
         $userObject = $this->getMapper()->authenticate($identity, $credential);
-        
         if ($userObject === false) {
             // Password does not match
             $e->setCode(AuthenticationResult::FAILURE_CREDENTIAL_INVALID)
@@ -105,23 +104,29 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
             $this->setSatisfied(false);
             return false;
         }
-        
+
         $userEntity = $userObject->getEntity();
         $e->setIdentity($userEntity);
         
         $userDbMapper = $this->serviceManager->get('zfcuser_user_db_mapper');
         
-        if ($userDbMapper->findByUsername($userEntity->getUsername()) === false) {
+
+	$fetchFromDb = $userDbMapper->findByUsername($userEntity->getUsername());
+        
+        if ($fetchFromDb === false) {
             //This user has been logged in, but he's not yet in the database.
             $userDbObject = $this->populateUserDbObject($userEntity);
-            $userDbMapper->insert($userDbObject, 'user');
-        } 
-        
+            $returnedEntity = $userDbMapper->insert($userDbObject, 'user');
+            $userEntity->setId($userDbObject->getId());
+        } else {
+            $userEntity->setId($fetchFromDb->getId());
+        }
+
         $this                ->setSatisfied(true);
         $storage             = $this->getStorage()->read();
         $storage['identity'] = $e->getIdentity();
         $this->getStorage()  ->write($storage);
-        
+
         $e->setCode(AuthenticationResult::SUCCESS)
           ->setMessages(array('Authentication successful.'));
     }
