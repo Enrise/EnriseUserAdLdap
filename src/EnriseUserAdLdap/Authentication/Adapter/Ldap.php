@@ -97,7 +97,6 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
         $credential = $e->getRequest()->getPost()->get('credential');
         
         $userObject = $this->getMapper()->authenticate($identity, $credential);
-        
         if ($userObject === false) {
             // Password does not match
             $e->setCode(AuthenticationResult::FAILURE_CREDENTIAL_INVALID)
@@ -105,7 +104,7 @@ class Ldap implements AdapterChain, ServiceManagerAwareInterface {
             $this->setSatisfied(false);
             return false;
         }
-        
+
         $userEntity = $userObject->getEntity();
         $e->setIdentity($userEntity);
         
